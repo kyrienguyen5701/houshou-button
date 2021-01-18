@@ -1,0 +1,26 @@
+{
+    "title": "Marine Button",
+    "action": {
+        "random": "Help me choose one",
+        "nonstop": "Random non-stop",
+        "loop": "Loop",
+        "overlap": "Overlap",
+        "bgm": "BGM",
+        "volume": "Volume",
+        "stop": "Stop",
+        "noGallery": "No gallery"
+    },
+    "context": {
+        "source": "Youtube source URL",
+        "trans": "Help with translation"
+    },
+    "text": {
+        "trans": "Help with translation",
+        "contrib": "Add more audio/buttons",
+        "term": "This project is a work of enthusiasts and is not related to the hololive official"
+    },
+    "lang": {
+        "en": "English",
+        "ja": "日本語"
+    }
+}
