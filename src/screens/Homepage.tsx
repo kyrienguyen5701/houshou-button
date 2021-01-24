@@ -9,7 +9,6 @@ import {useSelector, useDispatch} from 'react-redux';
 import MarineBackground from "../components/MarineBackground";
 import { playingRandom, playingRandomCtg } from '../redux/reducer';
 
-// TODO: Fix non-stop random functions
 const Homepage = () => {
 
     const [state, setState] = useState({
@@ -31,7 +30,6 @@ const Homepage = () => {
 
     // get configure from local storage
     useEffect(() => {
-        // @ts-ignore
         setState(prevState => {
             return {
                 ...prevState,
@@ -78,11 +76,6 @@ const Homepage = () => {
         })
         return categories;
     }
-
-    let current = {
-        btnState: {} as MarineBtnState,
-        audio: new Audio(),
-    };
 
     const toggleGallery = useCallback(() => {
         setConfig();
