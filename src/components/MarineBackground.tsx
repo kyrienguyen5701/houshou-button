@@ -13,7 +13,7 @@ const MarineBackground =  (props: MarineBackgroundState) => {
         <div>
             {props.video
                 ? <video className="background image-gallery-image"
-                         src={require(`../assets/sounds/${props.video}`).default}
+                         src={props.video}
                          autoPlay loop={props.loop}
                 >
                 </video>
