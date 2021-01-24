@@ -9,65 +9,12 @@ import MarineBtnData from '../utils/data';
 import {getConfig} from '../utils/storage';
 import './MarineBtn.scss';
 import isMobile from "../utils/device";
+import axios from 'axios';
 
 export interface MarineBtnState {
     isPlaying: boolean,
     isDisabled: boolean,
 }
-
-// class MarineBtn extends React.Component<MarineBtnData, MarineBtnState> {
-//     constructor(props: MarineBtnData) {
-//         super(props);
-//         this.state = {
-//             isPlaying: false,
-//             isDisabled: false
-//         }
-//     }
-//     // playingNow = useSelector((state: any) => state.playingNow);
-//     // hideGallery = useSelector((state: any) => state.hidden);
-//     // playingVideo = useSelector((state: any) => state.playingVideo);
-//
-//     playBtn (callback?: Function) {
-//         const dispatch = useDispatch();
-//         this.setState({
-//             isPlaying: true
-//         });
-//         dispatch.playingNow();
-//         let audio = '../assets/sounds/' + this.props.file;
-//         if (this.props.category === 4) {
-//             dispatch.toggleVideo(audio);
-//             audio += '.mp4';
-//         }
-//         const ctrl = soundCtrl.play( {
-//             isPlaying: true,
-//             isDisabled: false
-//         }, new Audio(require(audio).default))
-//         if (!getConfig().loop) {
-//             ctrl.audio.onended = () => {
-//                 this.setState({
-//                     isPlaying: false
-//                 });
-//                 dispatch.toggleVideo('');
-//                 if (callback) {
-//                     callback();
-//                 }
-//             }
-//         }
-//         return ctrl;
-//     }
-//
-//     render() {
-//         return (
-//             <button
-//                 className={`btn ${this.state.isPlaying ? "playing" : ""}`}
-//                 disabled={this.state.isDisabled}
-//                 onClick={() => this.playBtn()}
-//             >
-//                 {getLang(this.props.name)}
-//             </button>
-//         );
-//     }
-// }
 
 const MarineBtn = (props: {
     data: MarineBtnData,
@@ -77,13 +24,31 @@ const MarineBtn = (props: {
 }) => {
 
     const [isPlaying, setIsPlaying] = useState(false);
-    const [isDisabled, setIsDisabled] = useState(false);
     const dispatch = useDispatch();
     const video = useSelector((state: any) => (state.video));
     const random = useSelector((state: any) => (state.random));
     const randomCtg = useSelector((state: any) => (state.randomCtg));
+    
+    const getMedia = async () => {
+        let media;
+        if (props.data.category !== 4) media = props.data.file;
+        else {
+            await axios({
+                method: 'POST',
+                url: '/send', //'http://127.0.0.1:8000/send' for dev
+                headers: {'content-type': 'application/json'},
+                data: {
+                    'url': props.data.url,
+                    'isMobile': isMobile() 
+                }
+            })
+            .then(res => media = res.data)
+            .catch(e => console.log(e))
+        }
+        return media;
+    }
 
-    const playBtn = () => {
+    const playBtn = async () => {
         setIsPlaying(true);
         if (video) {
             if (!getConfig().overlap) {
@@ -91,14 +56,15 @@ const MarineBtn = (props: {
                 props.setImageIndex();
             }
         }
-        let sound = props.data.file;
+        const media = await getMedia().then(res => res);
         const ctrl = soundCtrl.play( {
             isPlaying: true,
             isDisabled: false,
-        }, new Audio(require('../assets/sounds/' + sound).default)
-        , setIsPlaying);
+        }, new Audio(props.data.category !== 4 
+            ? require('../assets/sounds/' + media).default
+            : media), setIsPlaying);
         if (props.data.category === 4 && !isMobile()) {
-            dispatch(toggleVideo(sound));
+            dispatch(toggleVideo(media));
             ctrl.audio.volume = 0;
         }
         if (!getConfig().loop) {
@@ -126,8 +92,8 @@ const MarineBtn = (props: {
                 ${getLang((categoryNames as any)[props.data.category])} 
                 ${isPlaying ? "playing" : ""}`
             }
-            disabled={isDisabled}
-            onClick={() => playBtn()}
+            key={getLang(props.data.name)}
+            onClick={playBtn}
         >
             {getLang(props.data.name)}
         </button>
