@@ -52,17 +52,13 @@ This site was initiated using create-react-app.
 To deploy a local development environment, first install either Docker or Node = 14. Then follow these steps:
 1. Clone the repository using git through this command `git clone https://github.com/kyrienguyen5701/ichimi-tavern.git` or through Github Desktop App. You can also download as a .zip file.
 2. Go into the repository `cd ichimi-tavern`
+3. 1. Run `npm install` or `yarn`
+4. Run `npm start` or `yarn start`. During the code modification process, the local development server can immediately reflect the results of the modification.
 
-From here, you can follow either of these 2 options:
+From here, you can follow either of these 2 options for deployment:
 
 ### Option 1 (Recommended): Using Docker
-For development, run the script below
-```
-docker build -f Dockerfile.dev -t ichimi-tavern-dev .
-docker run -it --rm -p 8000:5000 ichimi-tavern-dev
-```
-
-For deployment, you can choose to run a single multi-stage build container or run two containers then orchestrate using `docker-compose`
+By creating a Docker Image, you can run the build in any machine. You can choose to run a single multi-stage build container or run two containers then orchestrate using `docker-compose`
 1. Single multi-stage build
 ```
 docker build -f Dockerfile -t ichimi-tavern .
@@ -74,11 +70,10 @@ docker build -f Dockerfile.client -t ichimi-tavern-client .
 docker build -f Dockerfile.api -t ichimi-tavern-server .
 docker-compose up
 ```
+You can pull my latest image to preview the result by running `docker pull kyrie5701/ichimi-tavern && docker run -it --rm -p 8000:8000 kyrie5701/ichimi-tavern`
 
-### Option 2
-1. Run `npm install` or `yarn`
-2. Run `npm start` or `yarn start`. During the code modification process, the local development server can immediately reflect the results of the modification.
-3. To compile the files for deployment, run `npm build` or `yarn build`, which will generate the `build` directory. This site is completely static, you can directly deploy the entire `build` directory.
+### Option 2: Using Package Manager
+Run `npm build` or `yarn build`, which will generate the `build` directory. This site is completely static, you can directly deploy the entire `build` directory.
 
 ## What's next
 * More Marine buttons
