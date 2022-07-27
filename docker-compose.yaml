@@ -1,0 +1,13 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: ichimi-tavern-server
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    image: ichimi-tavern-client
+    ports:
+      - "3000:80"

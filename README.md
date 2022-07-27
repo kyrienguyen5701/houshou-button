@@ -49,12 +49,36 @@ Any translation/contribution is welcome.
 
 This site was initiated using create-react-app.
 
-To deploy a local development environment, first install the LTS version of Node. Then follow these steps:
+To deploy a local development environment, first install either Docker or Node = 14. Then follow these steps:
 1. Clone the repository using git through this command `git clone https://github.com/kyrienguyen5701/ichimi-tavern.git` or through Github Desktop App. You can also download as a .zip file.
 2. Go into the repository `cd ichimi-tavern`
-3. Run `npm install` or `yarn`
-4. Run `npm start` or `yarn start`. During the code modification process, the local development server can immediately reflect the results of the modification.
-5. To compile the files for deployment, run `npm build` or `yarn build`, which will generate the `build` directory. This site is completely static, you can directly deploy the entire `build` directory.
+
+From here, you can follow either of these 2 options:
+
+### Option 1 (Recommended): Using Docker
+For development, run the script below
+```
+docker build -f Dockerfile.dev -t ichimi-tavern-dev .
+docker run -it --rm -p 8000:5000 ichimi-tavern-dev
+```
+
+For deployment, you can choose to run a single multi-stage build container or run two containers then orchestrate using `docker-compose`
+1. Single multi-stage build
+```
+docker build -f Dockerfile -t ichimi-tavern .
+docker run -it --rm -p 8000:8000 ichimi-tavern
+```
+2. Multi containers build
+```
+docker build -f Dockerfile.client -t ichimi-tavern-client .
+docker build -f Dockerfile.api -t ichimi-tavern-server .
+docker-compose up
+```
+
+### Option 2
+1. Run `npm install` or `yarn`
+2. Run `npm start` or `yarn start`. During the code modification process, the local development server can immediately reflect the results of the modification.
+3. To compile the files for deployment, run `npm build` or `yarn build`, which will generate the `build` directory. This site is completely static, you can directly deploy the entire `build` directory.
 
 ## What's next
 * More Marine buttons
@@ -65,6 +89,9 @@ To deploy a local development environment, first install the LTS version of Node
 * A chatbot that can imitate Senchou (ethical?)
 * A mobile app version (necessary tho?)
 ...
+
+## Update
+- July 27th, 2022: Add multiple Dockerfile for dev, client, api, and the entire app.
 
 ## LICENSE
 
