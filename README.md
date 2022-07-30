@@ -4,7 +4,7 @@ Ahoy～ A tavern for Ichimi to hang out (really?) while hearing the sounds from 
 
 ヨーソロー～
 
-[Homepage](https://kyrienguyen5701.github.io/ichimi-tavern/#)
+[Homepage](https://houshou-button.herokuapp.com)
 
 Related links:
 * [Houshou Marine's Youtube channel](https://www.youtube.com/channel/UCCzUftO8KOVkV4wQG1vkUvg)
@@ -49,9 +49,9 @@ Any translation/contribution is welcome.
 
 This site was initiated using create-react-app.
 
-To deploy a local development environment, first install either Docker or Node = 14. Then follow these steps:
-1. Clone the repository using git through this command `git clone https://github.com/kyrienguyen5701/ichimi-tavern.git` or through Github Desktop App. You can also download as a .zip file.
-2. Go into the repository `cd ichimi-tavern`
+To deploy a local development environment, first install either Docker or Node = 14.x and Python = 3.6. Using upper Node version is highly NOT recommended as it requires upper node-sass version, which can break other dependencies! Then follow these steps:
+1. Clone the repository using git through this command `git clone https://github.com/kyrienguyen5701/houshou-button.git` or through Github Desktop App. You can also download as a .zip file.
+2. Go into the repository `cd houshou-button`
 3. 1. Run `npm install` or `yarn`
 4. Run `npm start` or `yarn start`. During the code modification process, the local development server can immediately reflect the results of the modification.
 
